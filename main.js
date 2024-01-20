@@ -1,34 +1,23 @@
-<script src="https://cdn.jsdelivr.net/npm/date-fns@3.3.0/index.min.js"></script>
-
-<script>
-function calculateAge() {
-    var inputDate = new Date(document.getElementById("year").value, document.getElementById("month").value - 1, document.getElementById("date").value);
-
-    
-    if (isNaN(inputDate.getTime())) {
-        alert("Please enter a valid date.");
-        return;
+function age() {
+    var d1 = document.getElementById("date").value;
+    var m1 = document.getElementById("month").value;
+    var y1 = document.getElementById("year").value;
+    var date = new Date();
+    var d2 = date.getDate();
+    var m2 = 1 + date.getMonth();
+    var y2 = date.getFullYear();
+    var month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (d1 > d2) {
+        d2 = d2 + month[m2 - 1];
+        m2 = m2 - 1;
     }
-
-    var currentDate = new Date();
-
-
-    var age = require('date-fns/each_day');
-    var ageArray = age({ start: inputDate, end: currentDate });
-    var years = ageArray.length - 1;
-
-    var lastBirthday = new Date(currentDate.getFullYear() - years, inputDate.getMonth(), inputDate.getDate());
-    var months = currentDate.getMonth() - lastBirthday.getMonth();
-    if (currentDate.getDate() < lastBirthday.getDate()) {
-        months--;
+    if (m1 > m2) {
+        m2 = m2 + 12;
+        y2 = y2 - 1;
     }
-
-    var days = currentDate.getDate() - lastBirthday.getDate();
-    if (days < 0) {
-        days += dateFns.getDaysInMonth(lastBirthday);
-    }
-
+    var d = d2 - d1;
+    var m = m2 - m1;
+    var y = y2 - y1;
     document.getElementById("age").innerHTML =
-        "Your Age is " + years + " Years " + months + " Months " + days + " Days";
+        "Your Age is " + y + " Years " + m + " Months " + d + " Days";
 }
-</script>
